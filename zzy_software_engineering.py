@@ -11,6 +11,29 @@ class Contact:
         self.email = email
         self.address = address
 
+    def update(self):
+        self.contacts = []  # Clear the current contacts list to avoid duplicates
+
+        try:
+            with open(self.filename, 'r') as file:
+                contact_info = {}
+                for line in file:
+                    # Check if the line is a separator line
+                    if '------------------' in line:
+                        if contact_info:  # If contact_info is not empty
+                            new_contact = Contact(contact_info['Name'], contact_info['Phone'], contact_info['Email'],
+                                                  contact_info['Address'])
+                            self.contacts.append(new_contact)
+                            contact_info = {}  # Reset the dictionary for the next contact
+                    else:
+                        # Split the line by ': ' to get the key-value pair
+                        key, value = line.strip().split(': ')
+                        contact_info[key] = value  # Update the dictionary with contact details
+        except FileNotFoundError:
+            print(f"The file {self.filename} was not found.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
     def __str__(self):
         return f"Name: {self.name}\nPhone: {self.phone}\nEmail: {self.email}\n"
 
@@ -25,6 +48,7 @@ class Contact:
             f.write("------------------\n")
         print("Contact added successfully.")
         f.close()
+        self.update()
 
     def view_contacts(self):
         try:
@@ -36,36 +60,61 @@ class Contact:
         except FileNotFoundError:
             print(FileNotFoundError)
 
-    def delete_contact(self, name):
-        found_contacts = [contact for contact in self.contacts if contact.name.lower() == name.lower()]
-        if len(found_contacts) > 0:
-            self.contacts.remove(found_contacts[0])
-            print("Contact deleted successfully.")
-        else:
+    def delete_contact(self, name_to_delete):
+        # 先读取当前文件中所有的联系人
+        try:
+            with open(self.filename, 'r') as file:
+                contacts_data = file.read()
+        except FileNotFoundError:
+            print("File not found.")
+            return
+
+        # 分割每个联系人块，并确定要删除的联系人块
+        contacts_blocks = contacts_data.split("------------------\n")
+        contact_to_delete = f"Name: {name_to_delete}\n"
+        updated_contacts = []
+
+        for contact in contacts_blocks:
+            if not contact.startswith(contact_to_delete):
+                updated_contacts.append(contact)
+
+        # means noting deleted then error
+        if len(updated_contacts) == len(contacts_blocks):
             print("Contact not found.")
+            return
+
+        # 写入更新后的联系人列表到文件
+        with open(self.filename, 'w') as file:
+            for contact in updated_contacts:
+                if contact.strip() != "":
+                    file.write(contact)
+                    file.write("------------------\n")
+
+        print("Contact deleted successfully.")
 
     def choices(self):
-        c = Contact("Me", "12345678", "me@gmail.com", "home")
-        print("1. Add Contact")
-        print("2. View Contacts")
-        print("3. Delete Contact")
-        print("4. Back to Main Menu")
-        choice = input("Enter your choice (1-4): ")
-        if choice == "1":
-            name = input("Enter name: ")
-            phone = input("Enter phone number: ")
-            email = input("Enter email address: ")
-            address = input("Enter address: ")
-            c.add_contact(name, phone, email, address)
-        elif choice == "2":
-            c.view_contacts()
-        elif choice == "3":
-            name = input("Enter name of contact to delete: ")
-            c.delete_contact(name)
-        elif choice == "4":
-            return
-        else:
-            print("Invalid choice. Please try again.")
+        while True:
+            self.update()
+            print("1. Add Contact")
+            print("2. View Contacts")
+            print("3. Delete Contact")
+            print("4. Back to Main Menu")
+            choice = input("Enter your choice (1-4): ")
+            if choice == "1":
+                name = input("Enter name: ")
+                phone = input("Enter phone number: ")
+                email = input("Enter email address: ")
+                address = input("Enter address: ")
+                self.add_contact(name, phone, email, address)
+            elif choice == "2":
+                self.view_contacts()
+            elif choice == "3":
+                name = input("Enter name of contact to delete: ")
+                self.delete_contact(name)
+            elif choice == "4":
+                return
+            else:
+                print("Invalid choice. Please try again.")
 
 
 class Event:
