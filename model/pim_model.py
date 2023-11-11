@@ -1,9 +1,17 @@
 from datetime import datetime, timedelta
+import os
 
 
 class Item:
-    def __init__(self, filename):
-        self.filename = f"{filename}_{datetime.now().strftime('%Y-%m-%d')}.pim"
+    def __init__(self, pir, load):
+        if load == 0:
+            filename = f"{pir}_{datetime.now().strftime('%Y-%m-%d')}.pim"
+            self.filename = os.path.join(os.path.dirname(__file__), '..', 'PIM_dbs', filename)
+            with open(self.filename, "a") as f:
+                pass
+        else:
+            self.filename = os.path.join(os.path.dirname(__file__), '..', 'PIM_dbs', load)
+
         self.list = []
 
     def save_to_file(self, item_data):
@@ -12,7 +20,6 @@ class Item:
                 f.write(f"{key}: {value}\n")
             f.write("------------------\n")
         print(f"{type(self).__name__} added successfully.")
-        f.close()
 
     def view(self):
         try:
@@ -81,7 +88,7 @@ class Item:
 
 class Contact(Item):
     def __init__(self, name, phone, email, address):
-        super().__init__("Contacts")
+        super().__init__("Contacts", 0)
         self.name = name
         self.phone = phone
         self.email = email
@@ -103,34 +110,10 @@ class Contact(Item):
         self.save_to_file(event_data)
         self.update()
 
-    def choices(self):
-        while True:
-            self.update()
-            print("1. Add Contact")
-            print("2. View Contacts")
-            print("3. Delete Contact")
-            print("4. Back to Main Menu")
-            choice = input("Enter your choice (1-4): ")
-            if choice == "1":
-                name = input("Enter name: ")
-                phone = input("Enter phone number: ")
-                email = input("Enter email address: ")
-                address = input("Enter address: ")
-                self.add_contact(name, phone, email, address)
-            elif choice == "2":
-                self.view()
-            elif choice == "3":
-                name = input("Enter name of contact to delete: ")
-                self.delete_item("Name", name)
-            elif choice == "4":
-                return
-            else:
-                print("Invalid choice. Please try again.")
-
 
 class Event(Item):
     def __init__(self, description, start_time, alarm):
-        super().__init__("Events")
+        super().__init__("Events", 0)
         self.description = description
         self.start_time = start_time
         self.alarm = alarm
@@ -150,38 +133,10 @@ class Event(Item):
         self.save_to_file(event_data)
         self.update()
 
-    def choices(self):
-        while True:
-            self.update()
-            print("1. Add Event")
-            print("2. View Events")
-            print("3. Delete Event")
-            print("4. Back to Main Menu")
-            choice = input("Enter your choice (1-4): ")
-            if choice == "1":
-                description = input("Enter event description: ")
-                start_time_str = input("Enter event start time (YYYY-MM-DD HH:MM): ")
-                alarm_str = input("Enter event alarm (minutes before start time): ")
-                try:
-                    start_time = datetime.strptime(start_time_str, "%Y-%m-%d %H:%M")
-                    alarm = timedelta(minutes=int(alarm_str))
-                    self.add_event(description, start_time, alarm)
-                except ValueError:
-                    print("Invalid date/time format. Event not added.")
-            elif choice == "2":
-                self.view()
-            elif choice == "3":
-                description = input("Enter event description to delete: ")
-                self.delete_item("Description", description)
-            elif choice == "4":
-                return
-            else:
-                print("Invalid choice. Please try again.")
-
 
 class Task(Item):
     def __init__(self, description, ddl):
-        super().__init__("Tasks")
+        super().__init__("Tasks", 0)
         self.description = description
         self.ddl = ddl
 
@@ -196,69 +151,34 @@ class Task(Item):
     def create_item(self, item_data):
         return Task(item_data['Description'], item_data['DDL'])
 
-    def choices(self):
-        while True:
-            print("1. Add Task")
-            print("2. View Tasks")
-            print("3. Delete Task")
-            print("4. Back to Main Menu")
-            choice = input("Enter your choice (1-4): ")
-            if choice == "1":
-                description = input("Enter task description: ")
-                ddl = input("Enter event deadline (YYYY-MM-DD HH:MM): ")
-                try:
-                    start_time = datetime.strptime(ddl, "%Y-%m-%d %H:%M")
-                    # alarm = timedelta(minutes=int(alarm_str))
-                    self.add_task(description, ddl)
-                except ValueError:
-                    print("Invalid date/time format. Event not added.")
-            elif choice == "2":
-                self.view()
-            elif choice == "3":
-                description = input("Enter task description to delete: ")
-                self.delete_item("Description", description)
-            elif choice == "4":
-                return
-            else:
-                print("Invalid choice. Please try again.")
-
 
 class QuickNote(Item):
     def __init__(self):
-        super().__init__("QuickNotes")
-        QNote = input("======Take Quick Notes======\n")
-        try:
-            file1 = open(self.filename, 'w')
-            file1.write(QNote)
-        except FileNotFoundError:
-            print(FileNotFoundError)
+        super().__init__("QuickNotes", 0)
 
+    def makeNote(self):
+        QNote = []
+        flag = True
+        while True:
+            line = input()
+            if line.strip() == 'END':
+                confirm = input("Save(s) | Continue(c) | Quit without save(q)")
+                if confirm.lower() == 's':
+                    break
+                elif confirm.lower() == 'q':
+                    flag = False
+                    break
+                else:
+                    print("=====continue=======")
 
-def main():
-    c = Contact("Me", "12345678", "me@gmail.com", "home")
-    e = Event("Group Meeting", "2023-10-24 20:00", "19:50")
-    t = Task("Group Meeting", "2023-10-24 20:00")
-    while True:
-        print("Personal Information Manager (PIM)")
-        print("1. Contacts")
-        print("2. Events")
-        print("3. Take Quick Notes")
-        print("4. Tasks")
-        print("9. Exit")
-        choice0 = input("Enter your choice (1-4, 9): ")
-        if choice0 == "1":
-            c.choices()
-        elif choice0 == "2":
-            e.choices()
-        elif choice0 == "3":
-            QuickNote()
-        elif choice0 == "4":
-            t.choices()
-        elif choice0 == "9":
-            break
-        else:
-            print("Invalid choice. Please try again.")
+            else:
+                QNote.append(line)
 
-
-if __name__ == "__main__":
-    main()
+        if flag:
+            note_text = '\n'.join(QNote)
+            try:
+                with open(self.filename, 'w') as file:
+                    file.write(note_text)
+                print("Note saved successfully")
+            except FileNotFoundError:
+                print("File save fail")
