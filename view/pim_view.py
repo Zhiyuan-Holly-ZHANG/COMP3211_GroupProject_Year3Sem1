@@ -8,6 +8,7 @@ class Printer:
         print("2. Events")
         print("3. Take Quick Notes")
         print("4. Tasks")
+        print("5. Load File")
         print("9. Exit")
 
     def contact_page(self):
@@ -31,3 +32,7 @@ class Printer:
     def note_page(self):
         print("======Take Quick Notes========")
         print("=====Enter ""END"" to END=====")
+
+    def load_page(self):
+        print("load your file, makesure it end with .pim")
+

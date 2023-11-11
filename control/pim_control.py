@@ -4,6 +4,7 @@ from model.pim_model import Task
 from model.pim_model import QuickNote
 from datetime import datetime, timedelta
 from view.pim_view import Printer
+import os
 
 
 class Controller:
@@ -13,9 +14,26 @@ class Controller:
         self.event_model = None
         self.task_model = None
         self.note_model = None
+        self.load = 0
+        self.load_mode = False
 
     def contact_control(self):
-        self.contact_model = Contact("Me", "12345678", "me@gmail.com", "home")
+        if not self.load_mode:
+            while True:
+                choice = input("would you like to name the contact ? (y/n) > ")
+                if choice == 'y':
+                    name = input("Enter filename start with 'Contacts' > ")
+                    if name.startswith('Contacts'):
+                        self.load = name + ".pim"
+                        break
+                    else:
+                        print("!!!!!!Not start with 'Contacts' try again!!!!!!")
+                elif choice == 'n':
+                    break
+                else:
+                    print("wrong command try again")
+
+        self.contact_model = Contact("Me", "12345678", "me@gmail.com", "home", self.load)
         while True:
             self.contact_model.update()
             self.printer.contact_page()
@@ -37,7 +55,22 @@ class Controller:
                 print("Invalid choice. Please try again.")
 
     def event_control(self):
-        self.event_model = Event("Group Meeting", "2023-10-24 20:00", "19:50")
+        if not self.load_mode:
+            while True:
+                choice = input("would you like to name the event ? (y/n) > ")
+                if choice == 'y':
+                    name = input("Enter filename start with 'Events' > ")
+                    if name.startswith('Events'):
+                        self.load = name + ".pim"
+                        break
+                    else:
+                        print("!!!!!!Not start with 'Events' try again!!!!!!")
+                elif choice == 'n':
+                    break
+                else:
+                    print("wrong command try again")
+
+        self.event_model = Event("Group Meeting", "2023-10-24 20:00", "19:50", self.load)
         while True:
             self.event_model.update()
             self.printer.event_page()
@@ -63,7 +96,22 @@ class Controller:
                 print("Invalid choice. Please try again.")
 
     def task_control(self):
-        self.task_model = Task("Group Meeting", "2023-10-24 20:00")
+        if not self.load_mode:
+            while True:
+                choice = input("would you like to name the task ? (y/n) > ")
+                if choice == 'y':
+                    name = input("Enter filename start with 'Tasks' > ")
+                    if name.startswith('Tasks'):
+                        self.load = name + ".pim"
+                        break
+                    else:
+                        print("!!!!!!Not start with 'Tasks' try again!!!!!!")
+                elif choice == 'n':
+                    break
+                else:
+                    print("wrong command try again")
+
+        self.task_model = Task("Group Meeting", "2023-10-24 20:00", self.load)
         while True:
             self.task_model.update()
             self.printer.task_page()
@@ -88,6 +136,54 @@ class Controller:
                 print("Invalid choice. Please try again.")
 
     def note_control(self):
+        if not self.load_mode:
+            while True:
+                choice = input("would you like to name the note ? (y/n) > ")
+                if choice == 'y':
+                    name = input("Enter filename start with 'QuickNotes' > ")
+                    if name.startswith('QuickNotes'):
+                        self.load = name + ".pim"
+                        break
+                    else:
+                        print("!!!!!!Not start with 'QuickNotes' try again!!!!!!")
+                elif choice == 'n':
+                    break
+                else:
+                    print("wrong command try again")
+
         self.printer.note_page()
-        self.note_model = QuickNote()
+        self.note_model = QuickNote(self.load)
         self.note_model.makeNote()
+
+    def load_control(self):
+        self.load_mode = True
+        while True:
+            filename = input("enter the file name or 'q' to exit > ")
+            if filename == 'q':
+                return
+            flag = True
+            if not filename.endswith('.pim'):
+                print("format error : not end with pim")
+                flag = False
+            file_path = os.path.join(os.path.dirname(__file__), '..', 'PIM_dbs', filename)
+            if not os.path.exists(file_path):
+                print(f" {filename} not exit in PIM_dbs ")
+                flag = False
+            if flag:
+                break
+        self.load = filename
+        if filename.startswith("Contacts"):
+            print("========load successfully=========")
+            self.contact_control()
+        elif filename.startswith("Events"):
+            print("========load successfully=========")
+            self.event_control()
+        elif filename.startswith("QuickNotes"):
+            print("========load successfully=========")
+            self.note_control()
+        elif filename.startswith("Tasks"):
+            print("========load successfully=========")
+            self.task_control()
+        else:
+            raise SystemError("unknown error occurs")
+        self.load_mode = False

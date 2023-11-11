@@ -15,6 +15,8 @@ def main():
             controller.note_control()
         elif choice0 == "4":
             controller.task_control()
+        elif choice0 =="5":
+            controller.load_control()
         elif choice0 == "9":
             break
         else:

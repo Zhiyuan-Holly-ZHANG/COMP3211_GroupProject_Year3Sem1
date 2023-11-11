@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import os
 
 
 class Item:
     def __init__(self, pir, load):
+        self.load = load
         if load == 0:
             filename = f"{pir}_{datetime.now().strftime('%Y-%m-%d')}.pim"
             self.filename = os.path.join(os.path.dirname(__file__), '..', 'PIM_dbs', filename)
@@ -11,6 +12,8 @@ class Item:
                 pass
         else:
             self.filename = os.path.join(os.path.dirname(__file__), '..', 'PIM_dbs', load)
+            with open(self.filename, "a") as f:
+                pass
 
         self.list = []
 
@@ -87,8 +90,8 @@ class Item:
 
 
 class Contact(Item):
-    def __init__(self, name, phone, email, address):
-        super().__init__("Contacts", 0)
+    def __init__(self, name, phone, email, address, load):
+        super().__init__("Contacts", load)
         self.name = name
         self.phone = phone
         self.email = email
@@ -98,7 +101,7 @@ class Contact(Item):
         return f"Name: {self.name}\nPhone: {self.phone}\nEmail: {self.email}\n"
 
     def create_item(self, item_data):
-        return Contact(item_data['Name'], item_data['Phone'], item_data['Email'], item_data['Address'])
+        return Contact(item_data['Name'], item_data['Phone'], item_data['Email'], item_data['Address'], self.load)
 
     def add_contact(self, name, phone, email, address):
         event_data = {
@@ -112,8 +115,8 @@ class Contact(Item):
 
 
 class Event(Item):
-    def __init__(self, description, start_time, alarm):
-        super().__init__("Events", 0)
+    def __init__(self, description, start_time, alarm, load):
+        super().__init__("Events", load)
         self.description = description
         self.start_time = start_time
         self.alarm = alarm
@@ -122,7 +125,7 @@ class Event(Item):
         return f"Description: {self.description}\nStart Time: {self.start_time}\nAlarm: {self.alarm}\n"
 
     def create_item(self, item_data):
-        return Event(item_data['Description'], item_data['Start Time'], item_data['Alarm'])
+        return Event(item_data['Description'], item_data['Start Time'], item_data['Alarm'], self.load)
 
     def add_event(self, description, start_time, alarm):
         event_data = {
@@ -135,8 +138,8 @@ class Event(Item):
 
 
 class Task(Item):
-    def __init__(self, description, ddl):
-        super().__init__("Tasks", 0)
+    def __init__(self, description, ddl, load):
+        super().__init__("Tasks", load)
         self.description = description
         self.ddl = ddl
 
@@ -149,12 +152,12 @@ class Task(Item):
         self.update()
 
     def create_item(self, item_data):
-        return Task(item_data['Description'], item_data['DDL'])
+        return Task(item_data['Description'], item_data['DDL'], self.load)
 
 
 class QuickNote(Item):
-    def __init__(self):
-        super().__init__("QuickNotes", 0)
+    def __init__(self, load):
+        super().__init__("QuickNotes", load)
 
     def makeNote(self):
         QNote = []
