@@ -9,6 +9,7 @@ class Printer:
         print("3. Take Quick Notes")
         print("4. Tasks")
         print("5. Load File")
+        print("6. Search")
         print("9. Exit")
 
     def contact_page(self):

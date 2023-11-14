@@ -17,6 +17,8 @@ def main():
             controller.task_control()
         elif choice0 =="5":
             controller.load_control()
+        elif choice0=='6':
+            controller.search_control()
         elif choice0 == "9":
             break
         else:
