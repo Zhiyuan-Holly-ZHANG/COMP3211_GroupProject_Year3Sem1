@@ -1,13 +1,11 @@
-from model.pim_model import Contact
-from model.pim_model import Event
-from model.pim_model import Task
-from model.pim_model import QuickNote
+from model.Contacts import Contact
+from model.Events import Event
+from model.Tasks import Task
+from model.Notes import QuickNote
 from datetime import datetime, timedelta
 from view.pim_view import Printer
-from model.pim_model import QuickNote
-from model.pim_model import Searching
+from model.Search import Searching
 import os
-import re
 
 class Controller:
     def __init__(self):
