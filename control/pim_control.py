@@ -21,7 +21,7 @@ class Controller:
     def contact_control(self):
         if not self.load_mode:
             while True:
-                choice = input("would you like to name the contact ? (y/n) > ")
+                choice = input("Would you like to self define the contact filename? (y/n) > ")
                 if choice == 'y':
                     name = input("Enter filename start with 'Contacts' > ")
                     if name.startswith('Contacts'):
