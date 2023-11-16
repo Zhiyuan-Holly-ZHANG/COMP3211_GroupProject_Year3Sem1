@@ -82,7 +82,7 @@ class Item:
         except FileNotFoundError:
             print(f"The file {self.filename} was not found.")
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"An error occurred: {e}") # 当我 Add Contact 时，所有输入为空（i.e. 持续输入enter键 或tab键），那么这是一个Exception，这个算bug嘛？
 
     # an abstract method that need to be overriden by subclass
     def create_item(self, item_data):
