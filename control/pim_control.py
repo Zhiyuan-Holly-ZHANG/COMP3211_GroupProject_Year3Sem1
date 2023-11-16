@@ -22,14 +22,14 @@ class Controller:
         if not self.load_mode:
             while True:
                 choice = input("Would you like to self define the contact filename? (y/n) > ")
-                if choice == 'y':
+                if choice.lower() == 'y':
                     name = input("Enter filename start with 'Contacts' > ")
                     if name.startswith('Contacts'):
                         self.load = name + ".pim"
                         break
                     else:
                         print("!!!!!!Not start with 'Contacts' try again!!!!!!")
-                elif choice == 'n':
+                elif choice.lower() == 'n':
                     break
                 else:
                     print("wrong command try again")
@@ -59,14 +59,14 @@ class Controller:
         if not self.load_mode:
             while True:
                 choice = input("would you like to name the event ? (y/n) > ")
-                if choice == 'y':
+                if choice.lower() == 'y':
                     name = input("Enter filename start with 'Events' > ")
                     if name.startswith('Events'):
                         self.load = name + ".pim"
                         break
                     else:
                         print("!!!!!!Not start with 'Events' try again!!!!!!")
-                elif choice == 'n':
+                elif choice.lower() == 'n':
                     break
                 else:
                     print("wrong command try again")
@@ -323,11 +323,11 @@ class Controller:
     def search_control(self):
         while True:
             choice1 = input("input type of pir you want to search quit(q): ")
-            if choice1 == 'Contacts':
+            if choice1.lower() == 'contacts':
                 self.select(choice1)
 
 
-            elif choice1 == 'Events':
+            elif choice1.lower() == 'events':
                 choice2 = input("1)search by keywords 2)search by start time : ")
                 if choice2 == '1':
                     self.select(choice1)
@@ -335,15 +335,15 @@ class Controller:
                     self.select_time(choice1)
 
 
-            elif choice1 == 'Tasks':
+            elif choice1.lower() == 'tasks':
                 choice2 = input("1)search by keywords  2)search by DDL : ")
                 if choice2 == '1':
                     self.select(choice1)
                 elif choice2 == '2':
                     self.select_time(choice1)
 
-            elif choice1 == 'QuickNotes':
+            elif choice1.lower() == 'quicknotes':
                 self.select(choice1)
 
-            elif choice1 == 'q':
+            elif choice1.lower() == 'q':
                 return
