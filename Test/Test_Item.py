@@ -104,7 +104,7 @@ class TestItem(unittest.TestCase):
             mock_file_open.assert_any_call('fake_dir/PIM_dbs/fake_file.pim', 'r')
             mock_file_open.assert_any_call('fake_dir/PIM_dbs/fake_file.pim', 'w')
 
-            # 检擦写入功能
+            # 检查写入功能
             expected_write_calls = [
                 unittest.mock.call("Name: John Doe\nPhone: 1234567890\n"),
                 unittest.mock.call("------------------\n")
