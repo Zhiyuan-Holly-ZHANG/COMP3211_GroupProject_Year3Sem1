@@ -1,4 +1,4 @@
-from model.pim_model import Item
+from model.Item import Item
 
 
 class Task(Item):
