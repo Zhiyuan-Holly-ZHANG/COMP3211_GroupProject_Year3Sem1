@@ -1,4 +1,4 @@
-from model.pim_model import Item
+from model.Item import Item
 
 
 class Contact(Item):
@@ -9,10 +9,8 @@ class Contact(Item):
         self.email = email
         self.address = address
 
-    def __str__(self):
-        return f"Name: {self.name}\nPhone: {self.phone}\nEmail: {self.email}\n"
-
     def create_item(self, item_data):
+        print("called")
         return Contact(item_data['Name'], item_data['Phone'], item_data['Email'], item_data['Address'], self.load)
 
     def add_contact(self, name, phone, email, address):

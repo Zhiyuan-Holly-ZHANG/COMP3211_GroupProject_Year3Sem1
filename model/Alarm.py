@@ -1,4 +1,4 @@
-from model.Mail import Mail
+from control.Mail import Mail
 import os
 from datetime import datetime, timedelta
 
@@ -15,7 +15,7 @@ class Alarm:
         for section in event_sections:
             lines = section.strip().split('\n')
             if len(lines) < 3 or 'Alerted: True' in section:
-                continue  # 跳过空部分或已标记的事件
+                continue
 
             try:
                 description = lines[0].split(': ')[1].strip()
@@ -28,7 +28,7 @@ class Alarm:
                                            seconds=int(alarm_str.split(':')[2]))
                 events.append((description, start_time, alarm_duration))
             except IndexError:
-                continue  # 跳过格式错误的部分
+                continue
 
         return events
 

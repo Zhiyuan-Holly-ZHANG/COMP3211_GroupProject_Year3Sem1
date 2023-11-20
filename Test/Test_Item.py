@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 from unittest.mock import patch, mock_open
 
-from model.pim_model import Item
+from model.Item import Item
 from model.Search import Searching
 from model.Notes import QuickNote
 from model.Contacts import Contact

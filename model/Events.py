@@ -1,4 +1,4 @@
-from model.pim_model import Item
+from model.Item import Item
 
 
 class Event(Item):
@@ -7,9 +7,6 @@ class Event(Item):
         self.description = description
         self.start_time = start_time
         self.alarm = alarm
-
-    def __str__(self):
-        return f"Description: {self.description}\nStart Time: {self.start_time}\nAlarm: {self.alarm}\n"
 
     def create_item(self, item_data):
         return Event(item_data['Description'], item_data['Start Time'], item_data['Alarm'], self.load)
