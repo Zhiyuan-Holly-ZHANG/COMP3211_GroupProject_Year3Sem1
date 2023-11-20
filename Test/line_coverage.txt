@@ -1,1 +1,8 @@
-Line——Coverage of pim_Model： 82%
+Line Coverage of pim_Model： 82%
+Line Coverage of Task2： 100%
+Line Coverage of Search： 90%
+Line Coverage of Notes： 76%
+Line Coverage of Events： 92%
+Line Coverage of Contacts： 87%
+
+Total  Coverage： 85%
