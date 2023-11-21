@@ -7,7 +7,7 @@ from Test_Tasks import Test_Tasks
 from Test_Alarm import Test_Alarm
 import unittest
 
-# Invoke all Test collectively
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(Test_Tasks))
