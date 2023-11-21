@@ -3,10 +3,12 @@ from datetime import datetime
 
 
 class Searching:
+    # init function set up the path and the types of the query (such as Events, Contacts, Tasks and QuickNotes)
     def __init__(self, types):
         self.path = os.path.join(os.path.dirname(__file__), '..', 'PIM_dbs')
         self.types = types
 
+    # search by keywords
     def search_string(self, query):
         match = []
         for filename in os.listdir(self.path):
@@ -18,6 +20,7 @@ class Searching:
                         match.append(filename)
         return match
 
+    # search with date and operation such as > 2023-11-11 11:11
     def search_date(self, query):
         match = []
 
@@ -31,6 +34,7 @@ class Searching:
                 with open(file_path, 'r') as file:
                     contents = file.read()
                     events = contents.split('------------------')
+                    # check by matching with Start time or DDL
                     for event in events:
                         if 'Start Time:' in event:
                             start_time_str = event.split('Start Time: ')[1].split('\n')[0].strip()

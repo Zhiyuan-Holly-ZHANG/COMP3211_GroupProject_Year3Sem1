@@ -3,6 +3,7 @@ from model.Alarm import Alarm
 from datetime import datetime
 from unittest.mock import patch, mock_open,MagicMock
 class Test_Alarm(unittest.TestCase):
+    # Test the 'parse_event' method of the Alarm class
     @patch('os.listdir')
     @patch('model.Alarm.open', new_callable=mock_open,
            read_data="Description: Meeting\nStart Time: 2023-11-20 10:00:00\nAlarm: 1:0:0\n------------------\n")
@@ -13,6 +14,8 @@ class Test_Alarm(unittest.TestCase):
         self.assertEqual(len(events), 1)
         self.assertEqual(events[0][0], 'Meeting')
 
+    # Patch the 'model.Alarm.open' method with a mock object, using a fake file content
+    # Test the 'mark_event_as_alerted' method of the Alarm class
     @patch('model.Alarm.open', new_callable=mock_open,
            read_data="Description: Meeting\nStart Time: 2023-11-20 10:00:00\nAlarm: 1:0:0\n------------------\n")
     def test_mark_event_as_alerted(self, mock_open):

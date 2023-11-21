@@ -2,6 +2,10 @@ from datetime import datetime
 import os
 
 
+# This is the super class Item, its subclasses are Contacts, Events, Notes and Tasks
+
+# if user want to name the file, init function set filename to be input filename
+# if they don't want, init function set filename to be the current date
 class Item:
     def __init__(self, pir, load):
         self.load = load
@@ -17,6 +21,7 @@ class Item:
 
         self.list = []
 
+    # save file
     def save_to_file(self, item_data):
         with open(self.filename, "a") as f:
             for key, value in item_data.items():
@@ -24,6 +29,7 @@ class Item:
             f.write("------------------\n")
         print(f"{type(self).__name__} added successfully.")
 
+    # view function, print out the information of a certain pir file
     def view(self):
         try:
             file1 = open(self.filename, 'r')
@@ -33,6 +39,7 @@ class Item:
         except FileNotFoundError:
             print(FileNotFoundError)
 
+    # delete a certain ocation by a title(description, name, etc.)
     def delete_item(self, title, identifier):
         with open(self.filename, 'r') as file:
             items_data = file.read()
@@ -61,13 +68,14 @@ class Item:
         print(f"{type(self).__name__} deleted successfully.")
         file.close()
 
+    # this function is essential to the system, it read the information from the DBS(PIM_dbs) and update the information
     def update(self):
         self.list = []  # Clear the current items list to avoid duplicates
         try:
             with open(self.filename, 'r') as file:
                 item_data = {}
                 for line in file:
-                    if '------------------' in line:
+                    if '------------------' in line:  # '------------------' make a clear boundary between every pir
                         if item_data:
                             self.list.append(self.create_item(item_data))
                             item_data = {}

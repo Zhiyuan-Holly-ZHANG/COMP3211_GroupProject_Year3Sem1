@@ -6,6 +6,7 @@ from email.header import Header
 # sender = 'oliverlorentino@gmail.com'
 # receivers = ['21099573d@connect.polyu.hk']
 
+#this class generate the Mail and send to reciver
 class Mail:
     def __init__(self, sender, receiver):
         self.sender = sender
@@ -31,7 +32,7 @@ class Mail:
             # SMTP
             smtpObj = smtplib.SMTP('smtp.gmail.com', 587)  # SMTP service
             smtpObj.starttls()  # safe connects TLS
-            smtpObj.login(self.sender, 'jcfl djiv mgjn ytju')  #
+            smtpObj.login(self.sender, 'jcfl djiv mgjn ytju')  # Application password of the GMAIL account
             smtpObj.sendmail(self.sender, self.receiver, message.as_string())  # send mail
         except smtplib.SMTPException as e:
             print("Error: ；mail send fail", e)
