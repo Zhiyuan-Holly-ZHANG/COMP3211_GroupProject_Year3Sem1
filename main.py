@@ -3,7 +3,12 @@ from control.Thread2 import Daemon
 from view.pim_view import Printer
 
 
+# the main function is the start of the system, it handles with the users choice and call corresponding Controller
+
+
 def main():
+    # create a Daemon thread until the end of the system, it repeatedly check the DDL
+    # of the events and send email to users
     daemon = Daemon()
     daemon.create_daemon()
     controller = Controller()

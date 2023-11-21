@@ -2,9 +2,11 @@ from model.Item import Item
 
 
 class QuickNote(Item):
+    # Only call superclass' init function, no information added
     def __init__(self, load):
         super().__init__("QuickNotes", load)
 
+    # create the note
     def makeNote(self):
         QNote = []
         flag = True
@@ -12,6 +14,10 @@ class QuickNote(Item):
         while True:
             line = input()
             if line.strip() == 'END':
+                # enter w to rewrite the previous file,
+                # enter a to append information
+                # enter c to continue writing taking END as an input
+                # enter q to quit without save
                 confirm = input("Rewrite(w) | Append(a) | Continue(c) | Quit without save(q)")
                 if confirm.lower() in ['a', 'w']:
                     mode = confirm
@@ -28,6 +34,7 @@ class QuickNote(Item):
             else:
                 QNote.append(line)
 
+        # indicate user want to end taking note and want to save
         if flag:
             note_text = '\n'.join(QNote)
             try:

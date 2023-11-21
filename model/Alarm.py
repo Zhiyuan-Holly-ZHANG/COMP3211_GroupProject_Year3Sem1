@@ -4,9 +4,11 @@ from datetime import datetime, timedelta
 
 
 class Alarm:
+    # default path as PIM_dbs
     def __init__(self):
         self.folder_path = os.path.join(os.path.dirname(__file__), '..', 'PIM_dbs')
 
+    # split events with (---------------), get DDL and alarm information of every event
     def parse_event(self, file_path):
         with open(file_path, 'r') as file:
             event_sections = file.read().split('------------------\n')
@@ -29,6 +31,7 @@ class Alarm:
 
         return events
 
+    # mark the event already send notification
     def mark_event_as_alerted(self, file_path, event_description):
         with open(file_path, 'r') as file:
             content = file.read()
@@ -38,6 +41,7 @@ class Alarm:
         with open(file_path, 'w') as file:
             file.write(updated_content)
 
+    # check if the event DDL is close with alarm time
     def check_events(self):
         current_time = datetime.now()
         for file in os.listdir(self.folder_path):
@@ -49,6 +53,7 @@ class Alarm:
                         self.mark_event_as_alerted(file_path, description)
                         return description
 
+    # send Mail to Event need to be notified
     def alarm(self):
         result = self.check_events()
         if result:
