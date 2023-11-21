@@ -141,3 +141,21 @@ class TestItem(unittest.TestCase):
                 {'Title': 'Mr', 'Identifier': '123'}
             ]
             self.assertEqual(item.list, expected_items)
+
+    @patch('builtins.open', new_callable=mock_open)
+    @patch('builtins.print')
+    def test_view_file_not_found(self, mock_print, mock_open):
+        item = Item("TestItem", 0)
+        mock_open.side_effect = FileNotFoundError
+
+        item.view()
+        mock_print.assert_called_with(FileNotFoundError)
+
+    @patch('builtins.open', new_callable=mock_open)
+    @patch('builtins.print')
+    def test_delete_item_file_not_found(self, mock_print, mock_open):
+        item = Item("TestItem", "nonexistentfile.pim")
+        # Execute
+        item.delete_item("Title", "Identifier")
+        mock_open.side_effect = FileNotFoundError
+        mock_print.assert_called_with("Item not found.")

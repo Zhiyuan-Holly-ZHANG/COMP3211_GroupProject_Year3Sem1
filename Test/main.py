@@ -4,6 +4,7 @@ from Test_Notes import Test_Notes
 from Test_Events import Test_Events
 from Test_Item import TestItem
 from Test_Tasks import Test_Tasks
+from Test_Alarm import Test_Alarm
 import unittest
 
 
@@ -15,6 +16,7 @@ def suite():
     suite.addTest(unittest.makeSuite(Test_Notes))
     suite.addTest(unittest.makeSuite(Test_Events))
     suite.addTest(unittest.makeSuite(Test_Search))
+    suite.addTest(unittest.makeSuite(Test_Alarm))
     return suite
 
 if __name__ == '__main__':

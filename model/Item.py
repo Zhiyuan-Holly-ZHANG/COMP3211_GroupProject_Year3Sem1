@@ -34,13 +34,8 @@ class Item:
             print(FileNotFoundError)
 
     def delete_item(self, title, identifier):
-        # read all the content
-        try:
-            with open(self.filename, 'r') as file:
-                items_data = file.read()
-        except FileNotFoundError:
-            print("File not found.")
-            return
+        with open(self.filename, 'r') as file:
+            items_data = file.read()
 
         # split different blocks
         items_blocks = items_data.split("------------------\n")
@@ -81,20 +76,7 @@ class Item:
                         item_data[key] = value
         except FileNotFoundError:
             print(f"The file {self.filename} was not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
 
     # an abstract method that need to be overriden by subclass
     def create_item(self, item_data):
         raise NotImplementedError("must be overriden")
-
-
-
-
-
-
-
-
-
-
-

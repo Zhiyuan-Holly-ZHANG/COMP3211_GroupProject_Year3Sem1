@@ -18,6 +18,7 @@ class QuickNote(Item):
                     break
                 elif confirm.lower() == 'q':
                     flag = False
+                    print("Quit successfully")
                     break
                 elif confirm.lower() == 'c':
                     print("=====continue=======")

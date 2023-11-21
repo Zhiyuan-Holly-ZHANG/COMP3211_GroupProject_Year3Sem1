@@ -17,18 +17,15 @@ class Alarm:
             if len(lines) < 3 or 'Alerted: True' in section:
                 continue
 
-            try:
-                description = lines[0].split(': ')[1].strip()
-                start_time_str = lines[1].split(': ')[1].strip()
-                alarm_str = lines[2].split(': ')[1].strip()
+            description = lines[0].split(': ')[1].strip()
+            start_time_str = lines[1].split(': ')[1].strip()
+            alarm_str = lines[2].split(': ')[1].strip()
 
-                start_time = datetime.strptime(start_time_str, '%Y-%m-%d %H:%M:%S')
-                alarm_duration = timedelta(hours=int(alarm_str.split(':')[0]),
-                                           minutes=int(alarm_str.split(':')[1]),
-                                           seconds=int(alarm_str.split(':')[2]))
-                events.append((description, start_time, alarm_duration))
-            except IndexError:
-                continue
+            start_time = datetime.strptime(start_time_str, '%Y-%m-%d %H:%M:%S')
+            alarm_duration = timedelta(hours=int(alarm_str.split(':')[0]),
+                                       minutes=int(alarm_str.split(':')[1]),
+                                       seconds=int(alarm_str.split(':')[2]))
+            events.append((description, start_time, alarm_duration))
 
         return events
 
