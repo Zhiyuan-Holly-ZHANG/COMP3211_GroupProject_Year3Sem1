@@ -19,7 +19,6 @@ class Searching:
         return match
 
     def search_date(self, query):
-        print("date use")
         match = []
 
         operator, time = query.split(' ', maxsplit=1)
@@ -50,5 +49,5 @@ class Searching:
                                     (operator == '>' and start_time > query_time) or
                                     (operator == '=' and start_time == query_time)):
                                 match.append(filename)
-        print(match)
+
         return match

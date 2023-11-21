@@ -34,7 +34,7 @@ class Item:
             print(FileNotFoundError)
 
     def delete_item(self, title, identifier):
-        # 读取当前文件中所有的条目
+        # read all the content
         try:
             with open(self.filename, 'r') as file:
                 items_data = file.read()
@@ -42,7 +42,7 @@ class Item:
             print("File not found.")
             return
 
-        # 分割每个条目块，并确定要删除的条目块
+        # split different blocks
         items_blocks = items_data.split("------------------\n")
         items_to_delete = f"{title}: {identifier}\n"
         items_to_keep = []
@@ -51,12 +51,12 @@ class Item:
             if not item.startswith(items_to_delete):
                 items_to_keep.append(item)
 
-        # 如果更新后的列表长度等于原来的长度，说明没有条目被删除
+        # if the deleted file remain same as before indicates that no deletion
         if len(items_to_keep) == len(items_blocks):
             print(f"{type(self).__name__} not found.")
             return
 
-        # 写入更新后的条目列表到文件
+        # update new
         with open(self.filename, 'w') as file:
             for item in items_to_keep:
                 if item.strip() != "":
@@ -82,7 +82,7 @@ class Item:
         except FileNotFoundError:
             print(f"The file {self.filename} was not found.")
         except Exception as e:
-            print(f"An error occurred: {e}") # 当我 Add Contact 时，所有输入为空（i.e. 持续输入enter键 或tab键），那么这是一个Exception，这个算bug嘛？
+            print(f"An error occurred: {e}")
 
     # an abstract method that need to be overriden by subclass
     def create_item(self, item_data):
