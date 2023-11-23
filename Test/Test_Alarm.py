@@ -5,6 +5,7 @@ from unittest.mock import patch, mock_open, MagicMock
 
 
 class Test_Alarm(unittest.TestCase):
+    
     # Test the 'parse_event' method of the Alarm class
     @patch('os.listdir')
     @patch('model.Alarm.open', new_callable=mock_open,
