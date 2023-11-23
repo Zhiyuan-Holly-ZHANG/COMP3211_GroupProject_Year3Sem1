@@ -1,8 +1,14 @@
 # COMP3211_GroupProject_Year3Sem1
 
-## We are team 20
+We are team 20
 
-### For developers
+## For developers
+You can use 
+- CLI
+  or
+- PyCharm if you want to view test coverage more easily
+
+### CLI
 ```
 git clone https://github.com/Zhiyuan-Holly-ZHANG/COMP3211_GroupProject_Year3Sem1.git
 
