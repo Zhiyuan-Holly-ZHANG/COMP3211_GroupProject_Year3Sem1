@@ -18,7 +18,7 @@ class QuickNote(Item):
                 # enter a to append information
                 # enter c to continue writing taking END as an input
                 # enter q to quit without save
-                confirm = input("Rewrite(w) | Append(a) | Continue(c) | Quit without save(q)")
+                confirm = input("Rewrite(w) | Append(a) | Continue(c) | Quit without save(q) ")
                 if confirm.lower() in ['a', 'w']:
                     mode = confirm
                     break
