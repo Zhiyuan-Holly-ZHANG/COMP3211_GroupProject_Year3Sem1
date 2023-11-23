@@ -49,10 +49,16 @@ class Controller:
             self.printer.contact_page()
             choice = input("Enter your choice (1-4): ")
             if choice == "1":
-                name = input("Enter name: ")
-                phone = input("Enter phone number: ")
-                email = input("Enter email address: ")
-                address = input("Enter address: ")
+                while True:
+                    name = input("Enter name: ")
+                    phone = input("Enter phone number: ")
+                    email = input("Enter email address: ")
+                    address = input("Enter address: ")
+                    if '' not in [name, phone, email, address]:
+                        break
+                    else:
+                        print("Null input try again")
+
                 self.contact_model.add_contact(name, phone, email, address)
             elif choice == "2":
                 self.contact_model.view()
@@ -88,9 +94,14 @@ class Controller:
             self.printer.event_page()
             choice = input("Enter your choice (1-4): ")
             if choice == "1":
-                description = input("Enter event description: ")
-                start_time_str = input("Enter event start time (YYYY-MM-DD HH:MM): ")
-                alarm_str = input("Enter event alarm (minutes before start time): ")
+                while True:
+                    description = input("Enter event description: ")
+                    start_time_str = input("Enter event start time (YYYY-MM-DD HH:MM): ")
+                    alarm_str = input("Enter event alarm (minutes before start time): ")
+                    if '' not in [description, start_time_str, alarm_str]:
+                        break
+                    else:
+                        print("Null input try again")
                 try:
                     start_time = datetime.strptime(start_time_str, "%Y-%m-%d %H:%M")
                     alarm = timedelta(minutes=int(alarm_str))
@@ -131,8 +142,13 @@ class Controller:
             self.printer.task_page()
             choice = input("Enter your choice (1-4): ")
             if choice == "1":
-                description = input("Enter task description: ")
-                ddl = input("Enter event deadline (YYYY-MM-DD HH:MM): ")
+                while True:
+                    description = input("Enter task description: ")
+                    ddl = input("Enter event deadline (YYYY-MM-DD HH:MM): ")
+                    if '' not in [description, ddl]:
+                        break
+                    else:
+                        print("Null input try again")
                 try:
                     self.task_model.add_task(description, ddl)
                 except ValueError:
