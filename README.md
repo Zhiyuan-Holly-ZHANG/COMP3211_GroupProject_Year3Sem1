@@ -1,6 +1,6 @@
 # COMP3211_GroupProject_Year3Sem1
 
-We are team 20
+We are group 20
 
 ## For developers
 We assume your OS is Windows. (If not, please modify the format of the file path)
