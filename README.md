@@ -47,13 +47,4 @@ python main.py
 cd .\COMP3211_GroupProject_Year3Sem1\
 python test.py
 ```
----
 
-- [x] Code
-- [x] Developer Manual 
-- [x] Requirements coverage report （XLS or XLSX file）
-- [x] SRS
-- [x] User Manual
-- [ ] Design Document
-- [x] Demo
-- [ ] Presentation
