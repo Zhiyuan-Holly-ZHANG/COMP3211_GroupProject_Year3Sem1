@@ -15,7 +15,7 @@ def main():
     while True:
         printing = Printer()
         printing.main_page()
-        choice0 = input("Enter your choice (1-4, 9): ")
+        choice0 = input("Enter your choice (1-6, 9): ")
         if choice0 == "1":
             controller.contact_control()
         elif choice0 == "2":
