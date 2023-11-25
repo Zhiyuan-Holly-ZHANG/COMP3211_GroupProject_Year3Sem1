@@ -368,7 +368,7 @@ class Controller:
     # than respond following operation with respect to the kinds
     def search_control(self):
         while True:
-            choice1 = input("input type of pir you want to search quit(q): ")
+            choice1 = input("input type of pir you want to search(Contacts, Events, Tasks, QuickNotes) or quit(q): ")
             if choice1.lower() in ['contacts', 'quicknotes']:
                 self.select(choice1)
             elif choice1.lower() in ['tasks', 'events']:
